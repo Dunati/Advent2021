@@ -6,6 +6,5 @@
 bin/
 obj/
 *.user
-/Source/Days
 *.log
 /BenchmarkDotNet.Artifacts

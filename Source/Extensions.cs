@@ -1,12 +1,12 @@
 ﻿public static class Extensions {
     public static int[] ToIntArray(this string str, string separator = "\r\n") {
-        return str.Split(separator, StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToArray();
+        return str.Split(separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToArray();
     }
     public static int[] ToSortedIntArray(this string str, string separator = "\r\n") {
-        return str.Split(separator, StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).OrderBy(x => x).ToArray();
+        return str.Split(separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).OrderBy(x => x).ToArray();
     }
     public static IEnumerable<String> Lines(this string str) {
-        return str.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
+        return str.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
     }
 
     // https://stackoverflow.com/questions/47815660/does-c-sharp-7-have-array-enumerable-destructuring
