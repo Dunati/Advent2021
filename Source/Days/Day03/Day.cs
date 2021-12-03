@@ -7,13 +7,12 @@ class Day : BaseDay
     {
         if (part == 1)
             return Part1(rawData);
-
+        
         return Part2(rawData);
     }
 
-    int O2(ArraySegment<int> values, int bits)
+    int O2(ArraySegment<int> values, int bits, ArraySegment<int> aux)
     {
-        ArraySegment<int> aux = new int[values.Count];
         int mask = 1 << (bits);
         while (values.Count > 1)
         {
@@ -48,9 +47,8 @@ class Day : BaseDay
         return values[0];
     }
 
-    private int CO2(ArraySegment<int> values, int bits)
+    private int CO2(ArraySegment<int> values, int bits, ArraySegment<int> aux)
     {
-        ArraySegment<int> aux = new int[values.Count];
         int mask = 1 << (bits);
         while (values.Count > 1)
         {
@@ -84,9 +82,6 @@ class Day : BaseDay
         }
         return values[0];
     }
-    // in 1s    ms per op
-    // 3758     0.2660989888238425      // old
-    // 53913    0.01854840205516295     // new
 
     private string Part2(string rawData)
     {
@@ -95,11 +90,11 @@ class Day : BaseDay
         int total = lines.Count();
         int bits = lines.First().Length;
         ArraySegment<int> values = rawData.ToInts(2).ToArray();
+        int [] aux = new int[values.Count];
+        DoneParsing();       
 
-
-
-        var o2 = O2(values.ToArray(), bits);
-        var co2 = CO2(values.ToArray(), bits);
+        var o2 = O2(values.ToArray(), bits, aux);
+        var co2 = CO2(values, bits, aux);
 
         //4425732 too low
         return (o2 * co2).ToString();
