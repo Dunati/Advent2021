@@ -1,9 +1,15 @@
 ﻿public static class Extensions {
-    public static int[] ToIntArray(this string str, string separator = "\r\n") {
-        return str.Split(separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToArray();
+    public static IEnumerable<int> ToInts(this string str, int @base = 10, string separator = "\r\n") {
+        return str.Split(separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToInts(@base, separator);
+    }  
+    public static IEnumerable<int> ToInts(this IEnumerable<string> str, int @base = 10, string separator = "\r\n") {
+        return str.Select(x => Convert.ToInt32(x, @base));
     }
-    public static int[] ToSortedIntArray(this string str, string separator = "\r\n") {
-        return str.Split(separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).OrderBy(x => x).ToArray();
+    public static IEnumerable<int> ToSortedInt(this string str, int @base = 10, string separator = "\r\n") {     
+        return str.ToInts(@base, separator).OrderBy(x => x).ToArray();
+    }    
+    public static IEnumerable<int> ToSortedInt(this IEnumerable<string> str, int @base = 10, string separator = "\r\n") {
+        return str.ToInts(@base, separator).OrderBy(x => x).ToArray();
     }
     public static IEnumerable<String> Lines(this string str) {
         return str.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);

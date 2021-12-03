@@ -7,7 +7,7 @@ class Day : BaseDay
     {
         if (part == 1)
             return Part1(rawData);
-        var depth = rawData.ToIntArray();
+        var depth = rawData.ToInts().ToArray();
         int sum = depth[0] + depth[1] + depth[2];
         int greater = 0;
         for (int i = 3; i < depth.Length; i++)
@@ -26,7 +26,7 @@ class Day : BaseDay
 
     private static string Part1(string rawData)
     {
-        var depth = rawData.ToIntArray();
+        var depth = rawData.ToInts().ToArray();
         int greater = 0;
         for (int i = 1; i < depth.Length; i++)
         {
