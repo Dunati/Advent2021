@@ -13,55 +13,80 @@ class Day : BaseDay
 
     int O2(ArraySegment<int> values, int bits)
     {
+        ArraySegment<int> aux = new int[values.Count];
         int mask = 1 << (bits);
         while (values.Count > 1)
         {
+            var original = values;
+            int zeros = 0;
+            int ones = 0;
             mask >>= 1;
-            values = values.OrderBy(x => x & mask).ToArray();
-            int count = 0;
 
-            while (count < values.Count && ((values[count] & mask) == 0))
+            foreach (int value in values)
             {
-                count++;
+                if ((value & mask) == 0)
+                {
+                    aux[zeros++] = value;
+                }
+                else
+                {
+                    aux[^++ones] = value;
+                }
             }
 
-            if (count <= (values.Count - count))
+            if (ones >= zeros)
             {
-                values = values[count..];
+                values = aux[^ones..];
             }
             else
             {
-                values = values[0..count];
+                values = aux[0..zeros];
             }
+            aux = original;
+            
         }
         return values[0];
     }
 
     private int CO2(ArraySegment<int> values, int bits)
     {
+        ArraySegment<int> aux = new int[values.Count];
         int mask = 1 << (bits);
         while (values.Count > 1)
         {
+            var original = values;
+            int zeros = 0;
+            int ones = 0;
             mask >>= 1;
-            values = values.OrderBy(x => x & mask).ToArray();
-            int count = 0;
 
-            while (count < values.Count && ((values[count] & mask) == 0))
+            foreach (int value in values)
             {
-                count++;
+                if ((value & mask) == 0)
+                {
+                    aux[zeros++] = value;
+                }
+                else
+                {
+                    aux[^++ones] = value;
+                }
             }
 
-            if (count <= (values.Count - count))
+            if (ones >= zeros)
             {
-                values = values[0..count];
+                values = aux[0..zeros];
             }
             else
             {
-                values = values[count..];
+                values = aux[^ones..];
             }
+            aux = original;
+
         }
         return values[0];
     }
+    // in 1s    ms per op
+    // 3758     0.2660989888238425      // old
+    // 53913    0.01854840205516295     // new
 
     private string Part2(string rawData)
     {
@@ -72,12 +97,12 @@ class Day : BaseDay
         ArraySegment<int> values = rawData.ToInts(2).ToArray();
 
 
-        var o2 = O2(values, bits);
-        var co2 = CO2(values, bits);
 
+        var o2 = O2(values.ToArray(), bits);
+        var co2 = CO2(values.ToArray(), bits);
 
         //4425732 too low
-        return (o2*co2).ToString();
+        return (o2 * co2).ToString();
     }
 
     private static string Part1(string rawData)
