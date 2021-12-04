@@ -8,6 +8,8 @@ public class DefaultDictionary<TKey, TValue> {
 
     public Dictionary<TKey, TValue>.ValueCollection Values => entries.Values;
 
+    public Dictionary<TKey, TValue>.KeyCollection Keys => entries.Keys;
+
     public TValue this[TKey index] {
         get {
             TValue value = default(TValue);
