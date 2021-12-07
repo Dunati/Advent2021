@@ -11,8 +11,8 @@ class Day : BaseDay
     public override string Run(int part, string rawData)
     {
 
-        decimal[] fishCount = new decimal[7];
-        decimal[] fryCount = new decimal[9];
+        Int64[] fishCount = new Int64[7];
+        Int64[] fryCount = new Int64[9];
         foreach (var f in rawData.ToInts(10, ",\n\r"))
         {
             fishCount[f]++;
@@ -30,19 +30,19 @@ class Day : BaseDay
             int index = day % fishCount.Length;
             int spawnIndex = (day + 8) % fryCount.Length;
 
-            decimal fry = fryCount[spawnIndex];
+            Int64 fry = fryCount[spawnIndex];
             fryCount[spawnIndex] = fishCount[index] + fry;
             fishCount[index] += fry;
 
         }
         //692265565 too low
-        decimal total = CountFish(fishCount, fryCount);
+        Int64 total = CountFish(fishCount, fryCount);
         return total.ToString();
     }
 
-    private static decimal CountFish(decimal[] fishCount, decimal[] fryCount)
+    private static Int64 CountFish(Int64[] fishCount, Int64[] fryCount)
     {
-        decimal total = 0;
+        Int64 total = 0;
         for (int i = 0; i < fishCount.Length; i++)
         {
             total += fishCount[i];
