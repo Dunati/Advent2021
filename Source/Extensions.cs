@@ -75,4 +75,27 @@
         }
         return max;
     }
+
+    public static IEnumerable<T[]> Permute<T>(this IEnumerable<T> source)
+    {
+        return permutate(source, Enumerable.Empty<T>());
+
+        IEnumerable<T[]> permutate(IEnumerable<T> reminder, IEnumerable<T> prefix)
+        {
+            if (reminder.Any())
+            {
+                return
+                    from t in reminder.Select((r, i) => (r, i))
+                    let nextReminder = reminder.Take(t.i).Concat(reminder.Skip(t.i + 1)).ToArray()
+                    let nextPrefix = prefix.Append(t.r)
+                    from permutation in permutate(nextReminder, nextPrefix)
+                    select permutation;
+
+            }
+            else
+            {
+                return new[] { prefix.ToArray() };
+            }
+        }
+    }
 }
