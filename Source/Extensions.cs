@@ -76,6 +76,19 @@
         return max;
     }
 
+    public static T Pop<T>(this List<T> list)
+    {
+        int last = list.Count - 1;
+        T value = list[last];
+        list.RemoveAt(last);
+        return value;
+    }
+
+    public static void Push<T>(this List<T> list, T value)
+    {
+        list.Add(value);
+    }
+
     public static IEnumerable<T[]> Permute<T>(this IEnumerable<T> source)
     {
         return permutate(source, Enumerable.Empty<T>());
