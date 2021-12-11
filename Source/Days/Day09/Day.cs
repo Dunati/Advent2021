@@ -1,7 +1,6 @@
 namespace Day09;
 
 using System;
-using Point = System.Drawing.Point;
 
 class Day : BaseDay
 {
