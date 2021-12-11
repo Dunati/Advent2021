@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 public static class Runner
 {
-    const string Cookie = "53616c7465645f5f5c4e88e326e7583dd1c3545c96a18e703c22c1aca1dce5cd3cb6a69c70f3a4b84a5988e548edb6fc";
+    private const string CookiePath = "Cookie.txt";
+
     private static void RunAllDays()
     {
         foreach (Type t in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.Name.StartsWith("Day")).OrderBy(x => x.Name))
@@ -24,14 +25,17 @@ public static class Runner
         return now.Year >= year && now.Day >= day;
     }
 
-    static async Task<bool> GetInput(int day, int year, string cookie, string filename)
+    static async Task<bool> GetInput(int day, int year, string filename)
     {
         if(!IsDayOpen(day, year))
         {
             return false;
         }
+
+
         if (!File.Exists(filename) )
         {
+            string cookie = File.ReadAllText(CookiePath);
             var uri = new Uri("https://adventofcode.com");
             var cookies = new CookieContainer();
             cookies.Add(uri, new System.Net.Cookie("session", cookie));
@@ -119,6 +123,8 @@ public static class Runner
             stream.WriteLine(template);
 
             CopyFiles(day);
+
+            GetInput(day, 2021, $"{DayPath(day)}/input1.txt").Wait();
         }
         else
         {
@@ -143,7 +149,7 @@ public static class Runner
 
         int number = day.Number;
 
-        if (!GetInput(number, 2021, Cookie, $"{DayPath(number)}/input1.txt").Result)
+        if (!GetInput(number, 2021, $"{DayPath(number)}/input1.txt").Result)
         {
             Trace.WriteLine("Hold yer horses");
             return;

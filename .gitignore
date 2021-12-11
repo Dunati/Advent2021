@@ -8,3 +8,4 @@ obj/
 *.user
 *.log
 /BenchmarkDotNet.Artifacts
+/Cookie.txt
