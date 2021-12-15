@@ -90,7 +90,7 @@ public class BaseDay
                 {
                     throw new Exception($"Test Failed: expected '{expected}', received '{result}'");
                 }
-                Trace.Write($".");
+                Trace.Write($" ");
             }
             catch (Exception e)
             {

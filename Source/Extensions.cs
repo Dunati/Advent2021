@@ -111,4 +111,10 @@
             }
         }
     }
+
+
+    public static Point Add(this in Point p, in Point o)
+    {
+        return new System.Drawing.Point(p.X+o.X, p.Y+o.Y);
+    }
 }

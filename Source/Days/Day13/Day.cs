@@ -78,8 +78,8 @@ class Day : BaseDay
             }
         }
 
-        //if(part == 2)
-        //Print(points);
+        if(part == 2)
+        Print(points);
 
         //96 wrong
         //97 wrong
@@ -110,7 +110,7 @@ class Day : BaseDay
         char[,] map = new char[maxx, maxy];
         foreach (var point in points)
         {
-            map[point.X, point.Y] = '#';
+            map[point.X, point.Y] = '█';
         }
 
         for (int y = 0; y < maxy; y++)
