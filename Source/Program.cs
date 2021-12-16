@@ -178,6 +178,7 @@ public static class Runner
         Trace.Write($"Running {day.Name}-{part} ");
         if (day.RunTests(part))
         {
+            day.InTest = false;
             Trace.WriteLine($"  result: {day.Run(part)}\n");
             return true;
         }

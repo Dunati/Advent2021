@@ -1,5 +1,46 @@
 ﻿public static class Extensions
 {
+    public static int[][] ToJaggedDigitArray(this string str)
+    {
+        return str.Lines().Select(x => x.Select(x => x - '0').ToArray()).ToArray();
+    }
+
+    public static T[,] To2DArray<T>(this T[][] src)
+    {
+        int w = src[0].Length;
+        int h = src.Length;
+
+        T[,] result = new T[w, h];
+
+        for (int y = 0; y < h; y++)
+        {
+            for (int x = 0; x < w; x++)
+            {
+                result[x, y] = src[y][x];
+            }
+        }
+        return result;
+    }
+
+    public static unsafe void Fill(this int[,] array, int value) 
+    {
+        fixed (int* ptr = &array[0,0])
+        {
+            int* curr = ptr;
+            int* last = ptr+array.GetLength(0)*array.GetLength(1);
+            while(curr < last)
+            {
+                *curr++ = value;
+            }            
+        }
+    }
+
+    public static int[,] ToDigitArray(this string str)
+    {
+        return str.Lines().Select(x => x.Select(x => x - '0').ToArray()).ToArray().To2DArray();
+    }
+
+
     public static IEnumerable<int> ToInts(this string str, int @base = 10, string separator = "\r\n")
     {
         return str.Split(separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToInts(@base, separator);
@@ -115,6 +156,42 @@
 
     public static Point Add(this in Point p, in Point o)
     {
-        return new System.Drawing.Point(p.X+o.X, p.Y+o.Y);
+        return new System.Drawing.Point(p.X + o.X, p.Y + o.Y);
+    }
+
+
+    public static BitArray ZeroExtend(this BitArray b, int bits)
+    {
+        BitArray n = new BitArray(bits);
+        {
+            for (int i = 0; i < Math.Min(b.Length, bits); i++)
+            {
+                n[i] = b[i];
+            }
+        }
+        return n;
+    }
+
+    public static uint Extract(this BitArray b, int first, int count)
+    {
+        uint result = 0;
+        first = b.Length - first - 1;
+        for(int i = 0; i < count; i++)
+        {
+            result <<= 1;
+            result |= b[first-i]?1u:0u;
+        }
+        return result;
+    }
+
+    public static string ToBinaryString(this BitArray b)
+    {
+        StringBuilder sb = new StringBuilder(b.Length);
+
+        for (int i = b.Length - 1; i >= 0; i--)
+        {
+            sb.Append(b[i] ? '1' : '0');
+        }
+        return sb.ToString();
     }
 }

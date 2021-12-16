@@ -68,7 +68,7 @@ public class BaseDay
         return File.ReadAllText(testName);
     }
 
-    public virtual string Run(int part, string rawData, bool isTest) => Run(part, rawData);
+    public virtual string Run(int part, string rawData, bool isTest) {InTest=isTest; return Run(part, rawData); }
 
     public bool RunTests(int part)
     {
@@ -112,4 +112,6 @@ public class BaseDay
     public int Part { get => 0; }
 
     public int Test { get => 0; }
+
+    public bool InTest { get;set; }
 }

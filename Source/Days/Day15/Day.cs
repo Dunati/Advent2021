@@ -88,7 +88,8 @@ class Day : BaseDay
         return n;
     }
 
-    public override string Run(int part, string rawData)
+
+    public override string Run(int part, string rawData) 
     {
         int[][] grid = rawData.Lines().Select(x => x.Select(x => x - '0').ToArray()).ToArray();
 
